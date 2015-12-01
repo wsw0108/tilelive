@@ -27,15 +27,15 @@ Containsdatasource.prototype.getTile = function(z, x, y, callback) {
     var maxzoom = this.maxzoom;
     setTimeout(function() {
         if (z == 0) {
-            callback(null, tiledata, {'x-tilelive-contains-data':true});
+            callback(null, tiledata, {'x-tilesource-contains-data':true});
         } else if (x < (Math.pow(2,z)/2)) {
             if (z >= maxzoom - 1) {
-                callback(null, tiledata, {'x-tilelive-contains-data':true});
+                callback(null, tiledata, {'x-tilesource-contains-data':true});
             } else {
-                callback(new Error('Tile does not exist'), null, {'x-tilelive-contains-data':true});
+                callback(new Error('Tile does not exist'), null, {'x-tilesource-contains-data':true});
             }
         } else {
-            callback(new Error('Tile does not exist'), null, {'x-tilelive-contains-data':false});
+            callback(new Error('Tile does not exist'), null, {'x-tilesource-contains-data':false});
         }
     }, this.time);
 };
@@ -56,4 +56,3 @@ Containsdatasource.prototype.stopWriting = function(callback) {
     this.stopped = true;
     return callback();
 };
-

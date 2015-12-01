@@ -1,9 +1,9 @@
 {
-  "name": "tilelive",
-  "version": "5.11.0",
-  "main": "./lib/tilelive.js",
+  "name": "tilesource",
+  "version": "1.0.0",
+  "main": "./lib/tilesource.js",
   "description": "API for various map tile backends",
-  "url": "http://github.com/mapbox/tilelive.js",
+  "url": "https://github.com/wsw0108/tilesource",
   "keywords": [
     "map",
     "mapnik",
@@ -16,38 +16,17 @@
   ],
   "repository": {
     "type": "git",
-    "url": "http://github.com/mapbox/tilelive.js.git"
+    "url": "https://github.com/wsw0108/tilesource"
   },
-  "author": {
-    "name": "Mapbox",
-    "url": "https://www.mapbox.com/",
-    "email": "info@mapbox.com"
-  },
-  "contributors": [
-    "Tom MacWright <tmcw>",
-    "Will White <willwhite>",
-    "Dane Springmeyer <springmeyer>",
-    "Young Hahn <yhahn>",
-    "Konstantin Käfer <kkaefer>",
-    "Blake Thompson <flippmoke>"
-  ],
   "dependencies": {
-    "minimist": "~0.2.0",
-    "progress-stream": "~0.5.x",
-    "sphericalmercator": "~1.0.1",
-    "queue-async": "~1.0.7"
   },
   "devDependencies": {
-    "concat-stream": "1.4.x",
     "coveralls": "~2.11.1",
     "eslint": "^0.24.0",
     "istanbul": "~0.3.0",
     "mbtiles": "~0.7.7",
     "tape": "2.13.3",
     "tilejson": "~1.0.0"
-  },
-  "bin": {
-    "tilelive-copy": "./bin/tilelive-copy"
   },
   "engines": {
     "node": ">= 0.10.0 < 0.11.0"

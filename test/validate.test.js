@@ -3,24 +3,6 @@ var verify = require('..').verify;
 var validate = require('..').validate;
 
 test('validate', function(t) {
-    // scheme
-    t.equal(
-        validate({scheme:5}).toString(),
-        'Error: scheme must be "tms" or "xyz"',
-        'invalid scheme (number)');
-    t.equal(
-        validate({scheme:'Hello world'}).toString(),
-        'Error: scheme must be "tms" or "xyz"',
-        'invalid scheme (string)');
-    t.equal(
-        validate({scheme:'xyz'}),
-        undefined,
-        'valid scheme (xyz)');
-    t.equal(
-        validate({scheme:'tms'}),
-        undefined,
-        'valid scheme (tms)');
-
     // minzoom
     t.equal(
         validate({minzoom:'Hello world'}).toString(),
@@ -164,10 +146,6 @@ test('validate', function(t) {
         'Error: center must be an array of the form [lon, lat, z]',
         'invalid center (lon string)');
     t.equal(
-        validate({center:[-190,0,0]}).toString(),
-        'Error: center lon value must be between -180 and 180',
-        'invalid center (lon < -180)');
-    t.equal(
         validate({center:[0,'a',0]}).toString(),
         'Error: center must be an array of the form [lon, lat, z]',
         'invalid center (lat string)');
@@ -175,10 +153,6 @@ test('validate', function(t) {
         validate({center:[0,NaN,0]}).toString(),
         'Error: center must be an array of the form [lon, lat, z]',
         'invalid center (NaN)');
-    t.equal(
-        validate({center:[0,-100,0]}).toString(),
-        'Error: center lat value must be between -90 and 90',
-        'invalid center (lat < -90)');
     t.equal(
         validate({center:[0,0,'a']}).toString(),
         'Error: center must be an array of the form [lon, lat, z]',
@@ -218,33 +192,13 @@ test('validate', function(t) {
         'Error: bounds must be an array of the form [west, south, east, north]',
         'invalid bounds (south string)');
     t.equal(
-        validate({bounds:[0,-100,0,0]}).toString(),
-        'Error: bounds south value must be between -95 and 95',
-        'invalid bounds (south < -90)');
-    t.equal(
         validate({bounds:[0,0,'a',0]}).toString(),
         'Error: bounds must be an array of the form [west, south, east, north]',
         'invalid bounds (east string)');
     t.equal(
-        validate({bounds:[-190,0,0,0]}),
-        undefined,
-        'valid out-of-180 bounds');
-    t.equal(
-        validate({bounds:[0,0,400,0]}).toString(),
-        'Error: bounds east value must be between -360 and 360',
-        'valid out-of-180 bounds');
-    t.equal(
-        validate({bounds:[-400,0,0,0]}).toString(),
-        'Error: bounds west value must be between -360 and 360',
-        'valid out-of-180 bounds');
-    t.equal(
         validate({bounds:[0,0,0,'a']}).toString(),
         'Error: bounds must be an array of the form [west, south, east, north]',
         'invalid bounds (north string)');
-    t.equal(
-        validate({bounds:[0,0,0,-100]}).toString(),
-        'Error: bounds north value must be between -95 and 95',
-        'invalid bounds (north < -90)');
     t.equal(
         validate({bounds:[10,0,-10,0]}).toString(),
         'Error: bounds west value must be less than or equal to east',

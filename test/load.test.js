@@ -1,8 +1,8 @@
 var test = require('tape');
 var assert = require('assert');
-var tilelive = require('../');
-tilelive.protocols['mbtiles:'] = require('mbtiles');
-tilelive.protocols['tilejson:'] = require('tilejson');
+var tilesource = require('../');
+tilesource.protocols['mbtiles:'] = require('mbtiles');
+tilesource.protocols['tilejson:'] = require('tilejson');
 
 var data = [
     {
@@ -136,20 +136,20 @@ var data = [
         legend: null,
         minzoom: 0,
         maxzoom: 22,
-        bounds: [ -180, -85.05112877980659, 180, 85.05112877980659 ],
+        bounds: [-20037508.34, -20037508.34, 20037508.34, 20037508.34],
         center: null
     }
 ];
 
 test('loading: no callback no fun', function(t) {
     t.throws(function() {
-        tilelive.load('http://foo/bar');
+        tilesource.load('http://foo/bar');
     });
     t.end();
 });
 
 test('loading: should refuse loading an invalid url', function(t) {
-    tilelive.load('http://foo/bar', function(err) {
+    tilesource.load('http://foo/bar', function(err) {
         t.ok(err);
         t.equal(err.message, 'Invalid tilesource protocol: http:');
         t.end();
@@ -157,7 +157,7 @@ test('loading: should refuse loading an invalid url', function(t) {
 });
 
 test('loading: should load an existing mbtiles file', function(t) {
-    tilelive.load('mbtiles://' + __dirname + '/fixtures/plain_2.mbtiles', function(err, source) {
+    tilesource.load('mbtiles://' + __dirname + '/fixtures/plain_2.mbtiles', function(err, source) {
         if (err) throw err;
         t.equal(typeof source.getTile, 'function');
         t.equal(typeof source.getGrid, 'function');
@@ -167,7 +167,7 @@ test('loading: should load an existing mbtiles file', function(t) {
 });
 
 test('loading: should load metadata about an existing mbtiles file', function(t) {
-    tilelive.info('mbtiles://' + __dirname + '/fixtures/plain_2.mbtiles', function(err, info, handler) {
+    tilesource.info('mbtiles://' + __dirname + '/fixtures/plain_2.mbtiles', function(err, info, handler) {
         if (err) throw err;
         t.deepEqual(info, data[5]);
         handler.close(t.end);
@@ -175,7 +175,7 @@ test('loading: should load metadata about an existing mbtiles file', function(t)
 });
 
 test('loading: should load metadata from an existing tilejson file', function(t) {
-    tilelive.info('tilejson://' + __dirname + '/fixtures/mapquest.tilejson', function(err, info, handler) {
+    tilesource.info('tilejson://' + __dirname + '/fixtures/mapquest.tilejson', function(err, info, handler) {
         if (err) throw err;
         t.deepEqual(info, data[0]);
         handler.close(t.end);
@@ -183,7 +183,7 @@ test('loading: should load metadata from an existing tilejson file', function(t)
 });
 
 test('loading: should load mbtiles file from a path containing a space', function(t) {
-    tilelive.info('mbtiles://' + __dirname + '/fixtures/path with space/plain_1.mbtiles', function(err, info, handler) {
+    tilesource.info('mbtiles://' + __dirname + '/fixtures/path with space/plain_1.mbtiles', function(err, info, handler) {
         if (err) throw err;
         t.deepEqual(info, data[4]);
         handler.close(t.end);
@@ -192,7 +192,7 @@ test('loading: should load mbtiles file from a path containing a space', functio
 
 
 test('loading: should load all tile sources in a directory', function(t) {
-    tilelive.all(__dirname + '/fixtures', function(err, info, handlers) {
+    tilesource.all(__dirname + '/fixtures', function(err, info, handlers) {
         if (err) throw err;
 
         // Sort tilesets before deepEqual.
