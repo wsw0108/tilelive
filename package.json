@@ -1,6 +1,6 @@
 {
   "name": "tilesource",
-  "version": "v5.9.1-maptalks1",
+  "version": "5.11.0-maptalks1",
   "main": "./lib/tilesource.js",
   "description": "API for various map tile backends",
   "url": "https://github.com/wsw0108/tilesource",
